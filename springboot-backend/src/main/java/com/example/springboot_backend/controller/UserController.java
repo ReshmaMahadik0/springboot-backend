@@ -1,9 +1,8 @@
 package com.example.springboot_backend.controller;
 
-// ✅ Use corrected import path and class name (Users → User)
 import com.example.springboot_backend.entities.User;
 
-import com.example.springboot_backend.services.UserService; // ✅ Interface renamed from UserServices → UserService
+import com.example.springboot_backend.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,52 +11,55 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/users") // ✅ Added base path here instead of repeating in every mapping
-public class UserController { // ✅ Renamed from MyController → UserController for clarity and standard naming
+@RequestMapping("/users")
+public class UserController {
 
     @Autowired
-    private UserService userService; // ✅ Renamed from userServices → userService (camelCase & singular)
+    private UserService userService;
+//    @Autowired
+//    private FirstProgrammaticApproach firstProgrammaticApproach;
+//    @Autowired
+//    private SecondProgrammaticApproach secondProgrammaticApproach;
 
-    // ✅ POST /users – standard REST path to add new user
+//    @PostMapping("/show")
+//    public void show(){
+//         System.out.println("Hello world");
+//    }
+
     @PostMapping
-    public User addUser(@RequestBody User user) {
-        return userService.createUser(user);
+    public ResponseEntity<User> addUser(@RequestBody User user) {
+        User user1 = userService.createUser(user);
+        return ResponseEntity.status(HttpStatus.CREATED).body(user1);
     }
 
-    // ✅ GET /users – fetch all users
     @GetMapping
-    public List<User> getAllUsers() {
-        return userService.getAllUsers();
+    public ResponseEntity<List<User>> getAllUsers() {
+        List<User> users = userService.getAllUsers();
+        return ResponseEntity.status(HttpStatus.OK).body(users);
+
     }
 
-    // ✅ GET /users/{id} – fetch user by ID
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable int id) {
-        return userService.getUserById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<User> getUserById(@PathVariable("id") int id) {
+         User user = userService.getUserById(id);
+        return ResponseEntity.ok(user);
     }
 
-    // ✅ PUT /users/{id} – update user details
     @PutMapping("/{id}")
     public ResponseEntity<User> updateUser(@PathVariable int id, @RequestBody User user) {
         User updatedUser = userService.updateUser(id, user);
-        if (updatedUser != null) {
-            return ResponseEntity.ok(updatedUser);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(updatedUser);
     }
 
-    // ✅ DELETE /users/{id} – delete user
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteUser(@PathVariable int id) {
-        boolean isDeleted = userService.deleteUser(id);
-        if (isDeleted) {
-            return ResponseEntity.ok("User deleted successfully with id: " + id);
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("User not found with id: " + id);
-        }
+         userService.deleteUser(id);
+         return ResponseEntity.ok("User deleted successfully");
+    }
+
+    @DeleteMapping("/all")
+    public ResponseEntity<?> deleteAllUser(){
+        userService.deleteAllUsers();
+        return ResponseEntity.ok("all user deleted successfully");
     }
 }

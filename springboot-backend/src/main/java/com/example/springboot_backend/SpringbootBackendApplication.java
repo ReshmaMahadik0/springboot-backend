@@ -2,8 +2,10 @@ package com.example.springboot_backend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
-@SpringBootApplication
+@SpringBootApplication//(scanBasePackages = "example.demo")
+@ComponentScan(basePackages = "example.demo")
 public class SpringbootBackendApplication {
 
 	public static void main(String[] args) {
@@ -11,3 +13,4 @@ public class SpringbootBackendApplication {
 	}
 
 }
+

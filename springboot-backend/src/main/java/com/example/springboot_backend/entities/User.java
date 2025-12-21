@@ -1,17 +1,26 @@
-package com.example.springboot_backend.entities; // ✅ Java package names should be lowercase
+package com.example.springboot_backend.entities; // Java package names should be lowercase
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 
 @Entity
-@Table(name = "users") // ✅ Explicit table name is good practice
-public class User { // ✅ Renamed from `Users` to `User` (Java class names should be singular)
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "users")
+public class User  {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id") // ✅ Added column name explicitly for clarity (optional but recommended)
-    private int id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column(name = "id")
+    private Long id;
 
-    @Column(name = "name") // ✅ Makes DB mapping clear
+    @Column(name = "name")
     private String name;
 
     @Column(name = "email")
@@ -23,45 +32,8 @@ public class User { // ✅ Renamed from `Users` to `User` (Java class names shou
     @Column(name = "city")
     private String city;
 
-    // ✅ Getter and setter methods follow standard naming conventions (no change needed)
+    @Column(name = "role")
+    private String role;
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
 }
+
