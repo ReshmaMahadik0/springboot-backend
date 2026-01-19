@@ -1,5 +1,6 @@
 package com.example.springboot_backend.services;
 
+import com.example.springboot_backend.dto.UserDto;
 import com.example.springboot_backend.entities.User;
 import org.springframework.stereotype.Service;
 
@@ -8,15 +9,15 @@ import java.util.List;
 @Service
 public interface UserService {
 
-    User createUser(User user);
+    UserDto createUser(UserDto userDto);
 
-    List<User> getAllUsers();
+    List<UserDto> getAllUsers();
 
-    User getUserById(int id);
+    UserDto getUserById(Long id);
 
-   User updateUser(int id, User user);
+   UserDto updateUser(Long id, UserDto userDto);
 
-    void deleteUser(int id);
+    void deleteUser(Long id);
 
     void deleteAllUsers();
 

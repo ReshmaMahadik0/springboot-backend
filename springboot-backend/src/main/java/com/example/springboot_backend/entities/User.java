@@ -1,10 +1,9 @@
 package com.example.springboot_backend.entities; // Java package names should be lowercase
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
+import java.util.List;
 
 
 @Entity
@@ -17,23 +16,25 @@ public class User  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "id")
     private Long id;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "email")
+    @Column(name = "email", unique = true)
     private String email;
 
-    @Column(name = "password")
+    @Column(name = "password",nullable = false)
     private String password;
 
-    @Column(name = "city")
+    @Column(name = "city", nullable = false)
     private String city;
 
-    @Column(name = "role")
-    private String role;
+//    @Column(name = "role", nullable = false)
+//    private String role;
+
+    @OneToMany(mappedBy = "user")
+    private List<Order> orders;
 
 }
 
