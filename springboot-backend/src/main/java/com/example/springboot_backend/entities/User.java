@@ -30,10 +30,10 @@ public class User  {
     @Column(name = "city", nullable = false)
     private String city;
 
-//    @Column(name = "role", nullable = false)
-//    private String role;
+    @Column(name = "role", nullable = false)
+    private String role;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user",cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<Order> orders;
 
 }

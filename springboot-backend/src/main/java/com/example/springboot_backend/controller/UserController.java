@@ -17,11 +17,12 @@ import java.util.List;
 @RequestMapping("/users")
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
-//    @PostMapping(produces = {"application/xml", "application/json"},
-//                 consumes = {"application/json", "application/xml"})
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
+
     @PostMapping()
     public ResponseEntity<UserDto> addUser(@RequestBody @Valid UserDto userDto) {
         UserDto userDto1 = userService.createUser(userDto);
@@ -29,8 +30,9 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<List<UserDto>> getAllUsers() {
-        List<UserDto> userDtos = userService.getAllUsers();
+    public ResponseEntity<List<UserDto>> getAllUsers(@RequestParam(defaultValue = "0") int page,
+                                                     @RequestParam(defaultValue = "5") int size) {
+        List<UserDto> userDtos = userService.getAllUsers(page, size);
         return ResponseEntity.status(HttpStatus.OK).body(userDtos);
 
     }
@@ -44,7 +46,7 @@ public class UserController {
     @PutMapping("/{id}")
     public ResponseEntity<UserDto> updateUser(@PathVariable Long id, @RequestBody UserDto userDto) {
         UserDto updatedUser = userService.updateUser(id, userDto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(updatedUser);
+        return ResponseEntity.ok(updatedUser);
     }
 
     @DeleteMapping("/{id}")

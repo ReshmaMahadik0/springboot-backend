@@ -1,9 +1,5 @@
 package com.example.springboot_backend.dto;
 
-import com.example.springboot_backend.entities.Order;
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -11,12 +7,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
-//package com.example.springboot_backend.dto;
-
 
 @Getter
 @Setter
-//@JacksonXmlRootElement(localName = "user")
 public class UserDto {
 
     private Long id;

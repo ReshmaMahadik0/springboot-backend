@@ -14,8 +14,11 @@ import java.util.List;
 @RequestMapping("/orders")
 public class OrderController {
 
-    @Autowired
-    private OrderService orderService;
+    private final OrderService orderService;
+
+    public OrderController(OrderService orderService) {
+        this.orderService = orderService;
+    }
 
     @PostMapping
     public ResponseEntity<OrderDto> createOrder(@Valid @RequestBody OrderDto orderDto) {
@@ -24,8 +27,9 @@ public class OrderController {
     }
 
     @GetMapping
-    public ResponseEntity<List<OrderDto>> getAllOrders() {
-        List<OrderDto> orderDto = orderService.getAllOrders();
+    public ResponseEntity<List<OrderDto>> getAllOrders(@RequestParam(defaultValue = "0") int page,
+                                                       @RequestParam(defaultValue = "5") int size) {
+        List<OrderDto> orderDto = orderService.getAllOrders(page, size);
         return ResponseEntity.status(HttpStatus.OK).body(orderDto);
     }
 
@@ -38,7 +42,7 @@ public class OrderController {
     @PutMapping("/{id}")
     public ResponseEntity<OrderDto> updateOrder(@PathVariable Long id, @Valid @RequestBody OrderDto orderDto) {
         OrderDto orderDto1 = orderService.updateOrder(id, orderDto);
-        return ResponseEntity.status(HttpStatus.OK).body(orderDto);
+        return ResponseEntity.ok(orderDto1);
     }
 
     @DeleteMapping("/{id}")

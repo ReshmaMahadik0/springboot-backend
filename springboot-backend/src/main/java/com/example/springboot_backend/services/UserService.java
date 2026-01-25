@@ -11,7 +11,7 @@ public interface UserService {
 
     UserDto createUser(UserDto userDto);
 
-    List<UserDto> getAllUsers();
+    List<UserDto> getAllUsers(int page, int size);
 
     UserDto getUserById(Long id);
 

@@ -8,7 +8,7 @@ public interface OrderService {
 
     OrderDto createOrder(OrderDto orderDto);
 
-    List<OrderDto> getAllOrders();
+    List<OrderDto> getAllOrders(int page, int size);
 
     OrderDto getOrderById(Long id);
 

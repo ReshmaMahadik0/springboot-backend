@@ -29,7 +29,7 @@ public class Order {
     @Column(name = "totalAmount", nullable = false)
     private Double totalAmount;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
